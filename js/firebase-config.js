@@ -13,7 +13,9 @@ window.SAR_FIREBASE_CONFIG = {
 window.SAR_CLOUD_OPTIONS = {
   enabled: true,
   playerEmailDomain: "players.scratchar.app",
-  adminEmail: "", // ใส่อีเมลบัญชีผู้ดูแล Firebase Authentication หลังสร้างบัญชีแอดมิน
+  adminUsername: "Krukriangsak",
+  adminPassword: "22112547",
+  pinSalt: "scratch-ar-adventure-2026",
   schoolId: "default-school",
   onlineWindowSeconds: 120
 };

@@ -125,3 +125,11 @@ python -m http.server 5500
 6. ใส่อีเมลเดียวกันใน `js/firebase-config.js` ช่อง `adminEmail` หรือกรอกอีเมลในหน้า Admin โดยตรง
 
 หมายเหตุ: การลบผู้เล่นจากหน้า Admin จะลบเอกสารข้อมูล Firestore แต่การลบบัญชี Authentication อย่างสมบูรณ์ต้องทำใน Firebase Console เนื่องจากเว็บฝั่งผู้ใช้ไม่มี Firebase Admin SDK
+
+---
+
+## การแก้ไข v4.2 No-Auth Firestore
+
+รุ่นนี้ยกเลิกการเรียก `createUserWithEmailAndPassword` และ `signInWithEmailAndPassword` แล้ว จึงไม่ต้องเปิด Sign-in provider ใน Firebase Authentication ผู้เล่นใช้ชื่อและ PIN โดยตรวจสอบกับ Firestore โดยตรง
+
+กรุณาเผยแพร่กฎจากไฟล์ `firestore.rules` ก่อนใช้งาน ดูรายละเอียดใน `FIREBASE-SETUP-TH.md`
