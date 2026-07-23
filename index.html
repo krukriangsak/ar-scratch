@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#6c5ce7">
+  <title>Scratch AR Adventure</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <div id="camera-layer" class="camera-layer" aria-hidden="true">
+    <video id="camera-video" muted autoplay playsinline></video>
+    <canvas id="camera-canvas"></canvas>
+    <div id="camera-placeholder" class="camera-placeholder">📷 กล้องยังปิดอยู่</div>
+  </div>
+
+  <div id="hand-cursor" class="hand-cursor" aria-hidden="true"></div>
+  <aside id="hand-status" class="hand-status hidden">
+    <span id="hand-status-icon">✋</span>
+    <div><strong id="hand-status-title">ระบบตรวจจับมือ</strong><small id="hand-status-description">นำมือเข้ามาในภาพ</small></div>
+  </aside>
+  <div id="hand-guide" class="hand-guide hidden">☝️ ชี้เพื่อเลื่อน • 👌 หนีบนิ้วเพื่อกด</div>
+
+  <header id="top-bar" class="top-bar hidden">
+    <div class="brand-mini">🐱 Scratch AR</div>
+    <div class="top-player">ผู้เล่น: <strong id="top-player-name">-</strong></div>
+    <div class="top-actions">
+      <button id="camera-toggle-button" class="icon-button" aria-label="เปิดกล้อง"><span id="camera-toggle-icon">📷</span></button>
+      <button id="sound-toggle-button" class="icon-button" aria-label="ปิดเสียง"><span id="sound-toggle-icon">🔊</span></button>
+      <button id="fullscreen-button" class="icon-button" aria-label="เต็มหน้าจอ">⛶</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="loading-screen" class="screen active" aria-hidden="false">
+      <div class="card hero-card centered">
+        <div class="mascot">🐱</div>
+        <h1>Scratch AR Adventure</h1>
+        <p id="loading-message">กำลังเตรียมเกม...</p>
+        <div class="progress-track"><div id="loading-progress" class="progress-bar"></div></div>
+      </div>
+    </section>
+
+    <section id="welcome-screen" class="screen" aria-hidden="true">
+      <div class="card hero-card centered">
+        <div class="mascot">🐱🚀</div>
+        <h1>Scratch AR Adventure</h1>
+        <p>เรียนรู้การเขียนโปรแกรม Scratch ผ่านเกมและการควบคุมด้วยนิ้วมือ</p>
+        <div class="button-row">
+          <button id="start-setup-button" class="primary-button"><span>เริ่มตั้งค่า</span><span>🚀</span></button>
+          <button id="skip-camera-button" class="secondary-button"><span>ใช้เมาส์ก่อน</span><span>🖱️</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section id="camera-permission-screen" class="screen" aria-hidden="true">
+      <div class="card centered permission-card">
+        <div class="mascot">📷✋</div>
+        <h2>เปิดกล้องเพื่อควบคุมด้วยนิ้ว</h2>
+        <p>ชูนิ้วชี้เพื่อเลื่อนตัวชี้ และหนีบนิ้วโป้งกับนิ้วชี้เพื่อกดปุ่ม</p>
+        <p class="privacy-note">ภาพจากกล้องประมวลผลในเบราว์เซอร์และไม่ถูกอัปโหลดโดยระบบนี้</p><p class="privacy-note"><strong>สำคัญ:</strong> เปิดเกมผ่าน <code>start-server.bat</code> และเข้า <code>http://localhost:8000</code> ห้ามดับเบิลคลิกไฟล์ index.html โดยตรง</p>
+        <div id="camera-error-message" class="error-box hidden"></div>
+        <div class="button-row">
+          <button id="allow-camera-button" class="primary-button"><span>อนุญาตให้ใช้กล้อง</span><span>📷</span></button>
+          <button id="camera-later-button" class="secondary-button"><span>ใช้เมาส์แทน</span><span>🖱️</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section id="profile-screen" class="screen" aria-hidden="true">
+      <div class="profile-layout">
+        <form id="profile-form" class="card form-card">
+          <h2>สร้างโปรไฟล์นักผจญภัย</h2>
+          <label>ชื่อเล่น
+            <input id="nickname-input" maxlength="20" autocomplete="nickname" placeholder="เช่น แบงค์">
+            <small id="nickname-length">0/20</small>
+            <span id="nickname-error" class="field-error"></span>
+          </label>
+          <label>ชั้นเรียน
+            <input id="classroom-input" placeholder="เช่น ป.4/1">
+          </label>
+          <label>เลขที่
+            <input id="student-number-input" inputmode="numeric" placeholder="เช่น 12">
+          </label>
+          <fieldset>
+            <legend>เลือกตัวละคร</legend>
+            <div id="avatar-grid" class="avatar-grid"></div>
+            <span id="avatar-error" class="field-error"></span>
+          </fieldset>
+          <button class="primary-button" type="submit"><span>บันทึกโปรไฟล์</span><span>✅</span></button>
+        </form>
+        <aside class="card preview-card centered">
+          <div id="selected-avatar-preview" class="avatar-preview">❔</div>
+          <h3 id="profile-name-preview">ชื่อผู้เล่น</h3>
+          <p id="profile-class-preview">ชั้นเรียน</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="home-screen" class="screen" aria-hidden="true">
+      <div class="dashboard">
+        <div class="card player-card">
+          <div id="home-avatar" class="home-avatar">🐱</div>
+          <div><h2 id="home-player-name">ผู้เล่น</h2><p id="home-player-detail">พร้อมออกเดินทางแล้วหรือยัง?</p></div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><span>⭐</span><strong id="total-stars">0</strong><small>ดาวทั้งหมด</small></div>
+          <div class="stat-card"><span>🏅</span><strong id="total-score">0</strong><small>คะแนน</small></div>
+          <div class="stat-card"><span>🏁</span><strong id="completed-levels">0</strong><small>ด่านสำเร็จ</small></div>
+        </div>
+        <div class="menu-grid">
+          <button class="menu-card" data-menu="lessons"><span>📚</span><strong>บทเรียน Scratch</strong><small>เรียนรู้ก่อนเล่นเกม</small></button>
+          <button class="menu-card" data-menu="adventure"><span>🗺️</span><strong>แผนที่การผจญภัย</strong><small>เล่นเกมเป็นด่าน</small></button>
+          <button class="menu-card" data-menu="leaderboard"><span>🏆</span><strong>ตารางคะแนน</strong><small>อันดับผู้เล่นรายวัน</small></button>
+          <button class="menu-card" data-menu="profile"><span>👤</span><strong>แก้ไขโปรไฟล์</strong><small>เปลี่ยนชื่อและตัวละคร</small></button>
+          <button class="menu-card menu-card--new-profile" data-menu="new-profile"><span>🆕</span><strong>สร้างโปรไฟล์ใหม่</strong><small>เริ่มเล่นเป็นผู้เล่นคนใหม่โดยไม่ใช้บัญชีเดิม</small></button>
+          <a class="menu-card admin-menu-link" href="./admin.html"><span>🛡️</span><strong>ผู้ดูแลระบบ</strong><small>จัดการผู้เล่น ด่าน และรายงาน</small></a>
+        </div>
+        <div class="card input-panel">
+          <p id="input-mode-text">ขณะนี้กำลังใช้เมาส์ในการควบคุม</p>
+          <button id="switch-input-mode-button" class="secondary-button"><span>เปิดโหมดควบคุมด้วยมือ</span><span>✋</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section id="coming-soon-screen" class="screen" aria-hidden="true">
+      <div class="card centered coming-card">
+        <div id="coming-soon-icon" class="mascot">🚧</div>
+        <h2 id="coming-soon-title">กำลังพัฒนา</h2>
+        <p id="coming-soon-description">ระบบนี้จะถูกเพิ่มในขั้นตอนต่อไป</p>
+        <button id="back-home-button" class="primary-button">กลับหน้าเมนูหลัก 🏠</button>
+      </div>
+    </section>
+  </main>
+  <a class="admin-corner-link" href="./admin.html" aria-label="ผู้ดูแลระบบ">🛡️ ผู้ดูแลระบบ</a>
+
+  <div id="toast" class="toast"><span id="toast-icon">✅</span><span id="toast-message"></span></div>
+
+  <div id="confirm-modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-card">
+      <div id="confirm-modal-icon" class="mascot">❓</div>
+      <h3 id="confirm-modal-title">ยืนยัน</h3>
+      <p id="confirm-modal-message"></p>
+      <div class="button-row">
+        <button id="confirm-modal-cancel" class="secondary-button">ยกเลิก</button>
+        <button id="confirm-modal-accept" class="primary-button">ยืนยัน</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MediaPipe Hands: ใช้รูปแบบเดียวกับโค้ดตัวอย่างที่ทดสอบแล้ว -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3.1675466862/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/hands.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.3.1675466124/drawing_utils.js" crossorigin="anonymous"></script>
+
+  <script>try{const t=JSON.parse(localStorage.getItem('scratchAR.theme')||'{}');if(t.accent)document.documentElement.style.setProperty('--primary',t.accent);if(t.cardOpacity!=null)document.documentElement.style.setProperty('--ui-alpha',t.cardOpacity);const links=document.querySelectorAll('.admin-menu-link,.admin-corner-link');links.forEach(x=>x.style.display=t.showAdminLink===false?'none':'');}catch(e){}</script>
+<script type="module" src="./js/app.js"></script>
+</body>
+</html>
