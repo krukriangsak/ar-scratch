@@ -95,3 +95,33 @@ python -m http.server 5500
 - Firebase config ไม่ใช่รหัสลับ การป้องกันฐานข้อมูลขึ้นอยู่กับ Authentication และ Firestore Rules
 - อย่าเปิดสิทธิ์ Firestore เป็น `allow read, write: if true`
 - Local Mode เหมาะสำหรับทดสอบเครื่องเดียวเท่านั้น หากต้องการข้อมูลร่วมกันทุกเครื่องต้องตั้ง Firebase ให้ครบ
+
+## v4.1 Online Users
+
+เวอร์ชันนี้ใส่ Firebase config ของโปรเจ็กต์ `scratch-ar-adventure` แล้ว และเพิ่ม:
+
+- สมัครผู้เล่นจากเครื่องใดก็ได้ แล้วรวมข้อมูลไว้ใน Firestore เดียวกัน
+- เข้าสู่ระบบด้วยชื่อผู้เล่นและ PIN จากเครื่องอื่น
+- ตารางคะแนนรวมผู้เล่นทุกเครื่อง
+- Admin แสดงรายชื่อผู้เล่นแบบ Real-time
+- แสดงออนไลน์/ออฟไลน์จาก `lastSeen`
+- Admin สร้างผู้ใช้ใหม่ พร้อมชื่อ ชั้น PIN และ Avatar
+- Admin แก้คะแนน ดาว ชั้นเรียน ระงับหรือเปิดใช้บัญชี
+
+### ต้องเปิดบริการก่อนใช้งาน
+
+1. Firebase Console > Authentication > Sign-in method > เปิด Email/Password
+2. Firebase Console > Firestore Database > Create database
+3. Firestore > Rules > วางเนื้อหาจาก `firestore.rules` แล้วกด Publish
+4. Authentication > Settings > Authorized domains เพิ่มโดเมน GitHub Pages เช่น `ชื่อผู้ใช้.github.io`
+
+### สร้างผู้ดูแลระบบ
+
+1. Authentication > Users > Add user แล้วสร้างด้วยอีเมลและรหัสผ่านของครู
+2. คัดลอก UID ของผู้ใช้นั้น
+3. Firestore Database > Start collection ชื่อ `admins`
+4. Document ID ใช้ UID ที่คัดลอก
+5. เพิ่ม field `role` ชนิด string ค่า `admin`
+6. ใส่อีเมลเดียวกันใน `js/firebase-config.js` ช่อง `adminEmail` หรือกรอกอีเมลในหน้า Admin โดยตรง
+
+หมายเหตุ: การลบผู้เล่นจากหน้า Admin จะลบเอกสารข้อมูล Firestore แต่การลบบัญชี Authentication อย่างสมบูรณ์ต้องทำใน Firebase Console เนื่องจากเว็บฝั่งผู้ใช้ไม่มี Firebase Admin SDK

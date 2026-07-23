@@ -9,12 +9,12 @@ service cloud.firestore {
     }
 
     match /admins/{uid} {
-      allow read: if signedIn() && request.auth.uid == uid;
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
       allow write: if false;
     }
 
     match /schools/{schoolId}/players/{uid} {
-      allow create: if signedIn() && request.auth.uid == uid;
+      allow create: if signedIn() && (request.auth.uid == uid || isAdmin());
       allow read: if signedIn();
       allow update, delete: if signedIn() && (request.auth.uid == uid || isAdmin());
     }

@@ -1,16 +1,19 @@
-// ตั้งค่าจาก Firebase Console > Project settings > Your apps > Web app
-// Firebase config สามารถอยู่ในหน้าเว็บได้ ความปลอดภัยต้องควบคุมด้วย Authentication และ Firestore Rules
+// Firebase Project: scratch-ar-adventure
+// ค่านี้ใช้ได้กับ VS Code Live Server และ GitHub Pages
 window.SAR_FIREBASE_CONFIG = {
-  apiKey: "PUT_YOUR_API_KEY_HERE",
-  authDomain: "PUT_YOUR_PROJECT.firebaseapp.com",
-  projectId: "PUT_YOUR_PROJECT_ID_HERE",
-  storageBucket: "PUT_YOUR_PROJECT.appspot.com",
-  messagingSenderId: "PUT_YOUR_SENDER_ID_HERE",
-  appId: "PUT_YOUR_APP_ID_HERE"
+  apiKey: "AIzaSyCqsGCJQOa753kA8w8k2mKHqNXqNL7aARM",
+  authDomain: "scratch-ar-adventure.firebaseapp.com",
+  projectId: "scratch-ar-adventure",
+  storageBucket: "scratch-ar-adventure.firebasestorage.app",
+  messagingSenderId: "1081324283669",
+  appId: "1:1081324283669:web:b293db5b4ce941c5d32b1c",
+  measurementId: "G-2P478VL3V0"
 };
+
 window.SAR_CLOUD_OPTIONS = {
   enabled: true,
   playerEmailDomain: "players.scratchar.app",
-  adminEmail: "", // ใส่อีเมลบัญชีผู้ดูแล Firebase Authentication
-  schoolId: "default-school"
+  adminEmail: "", // ใส่อีเมลบัญชีผู้ดูแล Firebase Authentication หลังสร้างบัญชีแอดมิน
+  schoolId: "default-school",
+  onlineWindowSeconds: 120
 };
