@@ -32,7 +32,7 @@ class CloudService{
  async markOffline(user){if(!this.enabled||!user?.id)return;try{await this.userRef(user.id).set({online:false,lastSeen:firebase.firestore.FieldValue.serverTimestamp()},{merge:true})}catch{}}
  async deletePlayer(user){if(!this.enabled||!user?.id)return;await this.userRef(user.id).delete()}
  async listPlayers(){if(!this.enabled)return [];const s=await this.playersRef().get();return s.docs.map(d=>this.normalizePlayer(d.data(),d.id)).sort((a,b)=>(b.score||0)-(a.score||0))}
- subscribeToPlayers(callback){if(!this.enabled)return()=>{};if(this.unsubscribePlayers)this.unsubscribePlayers();this.unsubscribePlayers=this.playersRef().onSnapshot(s=>callback(s.docs.map(d=>this.normalizePlayer(d.data(),d.id)).sort((a,b)=>(b.score||0)-(a.score||0))),e=>console.error('players realtime',e));return this.unsubscribePlayers}
+ subscribeToPlayers(callback){if(!this.enabled)return()=>{};if(this.unsubscribePlayers)this.unsubscribePlayers();this.unsubscribePlayers=this.playersRef().onSnapshot(s=>callback(s.docs.map(d=>this.normalizePlayer(d.data(),d.id)).sort((a,b)=>(b.score||0)-(a.score||0))),e=>{console.error('players realtime',e);if(e?.code==='permission-denied')alert('Firestore ปฏิเสธสิทธิ์ กรุณาเผยแพร่ไฟล์ firestore.rules ใน Firebase Console แล้วกด Ctrl+F5')});return this.unsubscribePlayers}
  async createPlayerAsAdmin(profile,pin){
   const name=profile.name.trim();if(!name||!/^[0-9]{4}$/.test(pin))throw new Error('กรอกชื่อและ PIN 4 หลัก');
   return this.registerPlayer({uid:'',name,classroom:profile.classroom||'',avatar:profile.avatar||'🐱',score:Number(profile.score||0),stars:Number(profile.stars||0),completedLessons:[],levelRuns:{},checkins:[],status:'active',online:false,createdBy:'admin'},pin)
@@ -42,6 +42,16 @@ class CloudService{
  async saveEvent(event){if(!this.enabled)return;await this.db.collection('schools').doc(this.schoolId).collection('events').add({...event,serverAt:firebase.firestore.FieldValue.serverTimestamp()})}
  async loadShared(){if(!this.enabled)return {};const base=this.db.collection('schools').doc(this.schoolId).collection('system');const [content,settings]=await Promise.all([base.doc('content').get(),base.doc('settings').get()]);return {content:content.exists?content.data():null,settings:settings.exists?settings.data():null}}
  async saveShared(data){if(!this.enabled)return;const base=this.db.collection('schools').doc(this.schoolId).collection('system');if(data.lessons||data.levels)await base.doc('content').set({lessons:data.lessons||[],levels:data.levels||[],updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});if(data.settings)await base.doc('settings').set({...data.settings,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true})}
+
+ systemRef(doc){return this.db.collection('schools').doc(this.schoolId).collection('system').doc(doc)}
+ announcementsRef(){return this.db.collection('schools').doc(this.schoolId).collection('announcements')}
+ async loadSystemDoc(doc){if(!this.enabled)return null;const x=await this.systemRef(doc).get();return x.exists?x.data():null}
+ async saveSystemDoc(doc,data){if(!this.enabled)return;await this.systemRef(doc).set({...data,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true})}
+ subscribeSystemDoc(doc,callback){if(!this.enabled)return()=>{};return this.systemRef(doc).onSnapshot(x=>callback(x.exists?x.data():null),console.error)}
+ async listAnnouncements(){if(!this.enabled)return [];const s=await this.announcementsRef().get();return s.docs.map(d=>({id:d.id,...d.data()}))}
+ subscribeAnnouncements(callback){if(!this.enabled)return()=>{};return this.announcementsRef().onSnapshot(s=>callback(s.docs.map(d=>({id:d.id,...d.data()}))),console.error)}
+ async saveAnnouncement(a){if(!this.enabled)return;const id=a.id||('A'+Date.now());const clean={...a,id:undefined,updatedAt:firebase.firestore.FieldValue.serverTimestamp()};delete clean.id;await this.announcementsRef().doc(id).set(clean,{merge:true});return id}
+ async deleteAnnouncement(id){if(!this.enabled)return;await this.announcementsRef().doc(id).delete()}
  async adminLogin(identifier,password){
   const opt=window.SAR_CLOUD_OPTIONS||{};const expectedUser=opt.adminUsername||'Krukriangsak',expectedPass=opt.adminPassword||'22112547';
   if(identifier!==expectedUser||password!==expectedPass)throw new Error('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');return true

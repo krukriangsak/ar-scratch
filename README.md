@@ -1,3 +1,7 @@
+# Scratch AR Adventure v5.0 Classroom Live Edition
+
+เพิ่มระบบรางวัลรายวัน 1–10 คะแนน ปฏิทินไทยและเวลาจริง ประกาศเคลื่อนไหว ระบบเสียงส่วนกลาง ปุ่มเปิดปิดกล้อง โหมดปรับปรุง และ Scratch Level Studio แบบเลือกบล็อกพร้อม Stage Preview
+
 # Scratch AR Adventure v4.0 Cloud Database Edition
 
 ระบบเกมเรียนรู้ Scratch ป.4 แบบ AR พร้อมกล้อง ตรวจจับมือ เสียงอ่าน บทเรียน ด่าน คะแนน ดาว เช็กอิน ตารางอันดับ และ Admin Studio
@@ -133,3 +137,7 @@ python -m http.server 5500
 รุ่นนี้ยกเลิกการเรียก `createUserWithEmailAndPassword` และ `signInWithEmailAndPassword` แล้ว จึงไม่ต้องเปิด Sign-in provider ใน Firebase Authentication ผู้เล่นใช้ชื่อและ PIN โดยตรวจสอบกับ Firestore โดยตรง
 
 กรุณาเผยแพร่กฎจากไฟล์ `firestore.rules` ก่อนใช้งาน ดูรายละเอียดใน `FIREBASE-SETUP-TH.md`
+
+## สำคัญ: เมื่อพบ Missing or insufficient permissions
+
+ให้เปิดไฟล์ `แก้-Missing-or-insufficient-permissions.md` และเผยแพร่ `firestore.rules` ไปยัง Firebase Console ก่อน เว็บที่อัป GitHub เพียงอย่างเดียวจะไม่อัปเดตกฎของฐานข้อมูลให้โดยอัตโนมัติ

@@ -1,20 +1,11 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // รุ่น School Demo: ไม่ใช้ Firebase Authentication
-    // เหมาะสำหรับงานทดลองในชั้นเรียนและ GitHub Pages
-    match /schools/{schoolId}/players/{playerId} {
-      allow read, create, update, delete: if true;
-    }
-    match /schools/{schoolId}/events/{eventId} {
-      allow read, create: if true;
-      allow update, delete: if false;
-    }
-    match /schools/{schoolId}/system/{docId} {
-      allow read, write: if true;
-    }
+    // DEVELOPMENT RULES — สำหรับทดสอบระบบผ่าน VS Code และ GitHub Pages
+    // เปิดอ่าน/เขียนทุก collection ชั่วคราว เพื่อแก้ Missing or insufficient permissions
+    // ห้ามใช้เก็บข้อมูลส่วนบุคคลสำคัญ และควรเปลี่ยนเป็นกฎที่ใช้ Authentication ภายหลัง
     match /{document=**} {
-      allow read, write: if false;
+      allow read, write: if true;
     }
   }
 }
