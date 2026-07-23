@@ -15,6 +15,8 @@ class HandTracker {
     this.lastVideoTime = -1;
     this.lastClickAt = 0;
     this.pinching = false;
+    this.lastScrollY = null;
+    this.scrollActive = false;
     this.cursor = {
       x: window.innerWidth / 2,
       y: window.innerHeight / 2
@@ -167,6 +169,9 @@ class HandTracker {
 
     const indexTip = landmarks[8];
     const thumbTip = landmarks[4];
+    const middleTip = landmarks[12];
+    const indexPip = landmarks[6];
+    const middlePip = landmarks[10];
 
     /* กล้องหน้าแสดงผลแบบกระจก จึงกลับแกน X */
     const targetX = (1 - indexTip.x) * window.innerWidth;
@@ -191,18 +196,30 @@ class HandTracker {
     );
 
     const isPinching = pinchDistance < pinchThreshold;
+    const twoFingerScroll = indexTip.y < indexPip.y && middleTip.y < middlePip.y && Math.abs(indexTip.y - middleTip.y) < 0.09 && !isPinching;
 
-    this.elements.cursorElement?.classList.toggle(
-      "pinching",
-      isPinching
-    );
+    this.elements.cursorElement?.classList.toggle("pinching", isPinching);
+    this.elements.cursorElement?.classList.toggle("scrolling", twoFingerScroll);
+    const scrollIndicator = document.querySelector("#scroll-indicator");
+    scrollIndicator?.classList.toggle("hidden", !twoFingerScroll);
+
+    if (twoFingerScroll) {
+      const handY = (indexTip.y + middleTip.y) / 2;
+      if (this.lastScrollY !== null) {
+        const delta = handY - this.lastScrollY;
+        if (Math.abs(delta) > 0.006) window.scrollBy({ top: delta * 1450, behavior: "auto" });
+      }
+      this.lastScrollY = handY;
+      this.scrollActive = true;
+    } else {
+      this.lastScrollY = null;
+      this.scrollActive = false;
+    }
 
     this.setStatus(
-      isPinching ? "👌" : "☝️",
-      isPinching ? "กำลังกด" : "ตรวจพบมือแล้ว",
-      isPinching
-        ? "คลายนิ้วก่อนกดครั้งต่อไป"
-        : "หนีบนิ้วโป้งกับนิ้วชี้เพื่อกด"
+      twoFingerScroll ? "✌️" : (isPinching ? "👌" : "☝️"),
+      twoFingerScroll ? "กำลังเลื่อนหน้า" : (isPinching ? "กำลังกด" : "ตรวจพบมือแล้ว"),
+      twoFingerScroll ? "ขยับมือขึ้นหรือลงอย่างช้า ๆ" : (isPinching ? "คลายนิ้วก่อนกดครั้งต่อไป" : "วงกลมจะครอบปุ่มเป้าหมาย แล้วหนีบนิ้วเพื่อกด")
     );
 
     const clickCooldown = Number(
@@ -236,13 +253,14 @@ class HandTracker {
         element.classList.remove("hand-hover");
       });
 
-    const target = document
-      .elementFromPoint(x, y)
-      ?.closest(
-        "button, a, input, select, textarea, [role='button']"
-      );
-
+    const target = document.elementFromPoint(x, y)?.closest("button, a, input, select, textarea, [role='button'], .block");
     target?.classList.add("hand-hover");
+    const label = document.querySelector("#cursor-label");
+    if (label) {
+      const raw = target?.getAttribute("aria-label") || target?.title || target?.textContent?.trim() || "ชี้ที่นี่";
+      label.textContent = raw.slice(0, 28);
+      label.classList.toggle("visible", !!target);
+    }
   }
 
   clickAt(x, y) {
