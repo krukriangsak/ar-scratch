@@ -1,0 +1,9 @@
+Scratch AR Adventure v5.21 — Login Screen Recovery
+
+- Fix duplicated startup/init code from v5.20.
+- Login screen is rendered before Firebase, MediaPipe, camera, or cloud sync.
+- Start directly at player login instead of leaving the camera placeholder alone.
+- Added static boot UI in index.html so the page is never blank while module JavaScript loads.
+- Added boot fallback UI for JavaScript/runtime errors.
+- Camera layer is explicitly placed behind application UI.
+- Previous game, editable block inputs, smart preview, audio and admin features are preserved.

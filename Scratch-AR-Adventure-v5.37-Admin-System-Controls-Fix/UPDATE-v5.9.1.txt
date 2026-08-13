@@ -1,0 +1,21 @@
+Scratch AR Adventure v5.9.1 - URL Audio System
+================================================
+
+รายการปรับปรุง
+- นำระบบอัปโหลดไฟล์เสียงไป Firebase Storage ออกจากหน้าแอดมิน
+- เปลี่ยนกลับมาใช้ช่องกรอก URL เพลงและเสียงเอฟเฟกต์
+- รองรับ URL ไฟล์เสียงโดยตรง เช่น MP3, WAV และ OGG
+- รองรับไฟล์เสียงในโปรเจกต์ เช่น ./assets/audio/background.mp3
+- คงระบบทดลองฟัง เปิด/ปิด ปรับระดับเสียง และเผยแพร่ผ่าน Firestore
+- ไม่ต้องเปิด Firebase Storage และไม่ต้อง deploy storage rules
+
+วิธีใช้
+1. เข้า admin.html
+2. เปิดเมนู Audio Studio / ระบบเสียง
+3. วาง URL ไฟล์เสียงในช่องที่ต้องการ
+4. กดทดลองฟัง
+5. กดบันทึกและเผยแพร่
+
+ตัวอย่าง URL
+./assets/audio/background.mp3
+https://example.com/audio/background.mp3

@@ -1,0 +1,11 @@
+Scratch AR Adventure v5.19 - Editable Inputs & Smart Stage Preview
+
+- ผู้เล่นแก้ค่าตัวเลข/ข้อความของบล็อกที่วางใน Code Area ได้ด้วยปุ่ม Edit
+- Admin Scratch Level Studio แก้ค่าบล็อกคำตอบและตัวลวงได้
+- เพิ่มโหมดตรวจคำตอบ Exact Values / Structure Only
+- Stage ใช้พิกัดแบบ Scratch (-240..240, -180..180)
+- แก้ทิศทาง Motion ให้สอดคล้องกับ Scratch: 90=ขวา, 0=ขึ้น
+- Repeat/Forever Preview จำลองหลายรอบแบบจำกัด เพื่อแสดงผลการชนขอบชัดเจน
+- if on edge, bounce ตรวจขอบและสะท้อนทิศทางจริงในตัวอย่าง
+- เพิ่ม motion trail และ edge flash ให้เห็นเส้นทางและจังหวะเด้ง
+- แก้ด่านตัวอย่างเดิน 100 ก้าวให้ใช้ move (100) steps

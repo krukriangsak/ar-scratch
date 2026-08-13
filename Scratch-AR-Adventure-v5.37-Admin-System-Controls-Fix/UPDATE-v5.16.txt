@@ -1,0 +1,16 @@
+Scratch AR Adventure v5.16 - Creator Shared Block Library
+
+Changes
+- Creator Studio now reads from the same window.SAR_BLOCK_LIBRARY used by Scratch Playground and level references.
+- Central Block IDs, categories, labels, shapes, inputs, opcode/runtime, enabled state, publish state and version are merged into one shared registry.
+- Firestore document schools/{schoolId}/system/blockStudio remains the online source for published overrides.
+- Added Reload Shared Library button.
+- Added English category filter and block search in Creator Studio.
+- Publishing updates window.SAR_BLOCK_LIBRARY immediately and dispatches sar-block-library-updated.
+- Local cache is now sar.creator.blocks.v516 and is merged with canonical blocks, so newly-added canonical blocks are not lost when an older cache exists.
+- New custom blocks are Draft by default and are inserted into the shared registry.
+- Deleting a block warns that existing levels referencing its Block ID may stop resolving.
+- Creator Studio version label updated to v5.16.
+
+Shared data flow
+block-library.js -> Creator Studio -> Firestore blockStudio -> Scratch Playground / lessons / levels

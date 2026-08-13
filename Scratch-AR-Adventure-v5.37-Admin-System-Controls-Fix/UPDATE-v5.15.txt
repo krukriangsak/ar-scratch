@@ -1,0 +1,15 @@
+Scratch AR Adventure v5.15 — Functional Shared Blocks
+
+- Shared Block Library is now the canonical source for Scratch Playground, Creator Studio and Scratch block levels.
+- Legacy level text is resolved to shared block IDs automatically.
+- New levels created in Scratch Level Studio save answerBlocks references: {blockId, values}.
+- Editable block values are preserved per level/project.
+- In Scratch Playground, number/text/key/target fields can be edited directly inside blocks.
+- In Scratch level games, double-click an added block to edit its input values.
+- Added working list commands: delete, delete all, insert, replace, item #, contains, show list, hide list.
+- Added define My Block support and My Block calls can run a defined script.
+- Keyboard-event and backdrop-event hat blocks now trigger their scripts in Playground.
+- Added if/else runtime handling.
+- Existing Firestore/Creator Studio shared-block publishing remains compatible.
+
+Compatibility: GitHub Pages, Firebase Firestore, desktop/mobile UI.

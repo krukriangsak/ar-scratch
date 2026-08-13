@@ -1,0 +1,8 @@
+Scratch AR Adventure v5.37 — Admin System Controls Fix
+- Restore working Admin tabs: Announcements, Maintenance, Contacts, Audio
+- Save locally and sync to Firestore system documents
+- Announcements publish/delete and realtime player updates
+- Maintenance toggle/message/reopen time/speech
+- Multiple contact channels with enable toggle
+- Background music + click/success/error/reward audio URLs and volume controls
+- Admin audio test button
