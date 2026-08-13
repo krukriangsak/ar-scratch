@@ -1,9 +1,0 @@
-Scratch AR Adventure v5.35 – Unlimited Lesson Media
-
-- Admin can add multiple lesson media entries without a fixed UI count limit.
-- Supported item types: image, video, audio, and general link.
-- Each item can have an optional caption.
-- Admin can preview all media before saving and remove individual entries.
-- Player lesson page renders every media item in order.
-- Existing single imageUrl/videoUrl/audioUrl lessons remain backward compatible and are migrated when edited.
-- Note: Firebase/Firestore still has service document-size limits, so “unlimited” means no fixed count limit in the editor, not infinite storage.

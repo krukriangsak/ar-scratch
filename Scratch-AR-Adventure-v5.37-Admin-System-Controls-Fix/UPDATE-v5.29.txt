@@ -1,8 +1,0 @@
-Scratch AR Adventure v5.29 — Reliable Camera Prompt + Cute Login
-
-- กล้องจะถามสิทธิ์ใหม่ทุกครั้งที่เปิดหน้าเกม ไม่ใช้ค่า camera=true เก่าจาก localStorage
-- แก้กรณีระบบคิดว่ากล้องเปิดแล้วทั้งที่ไม่มี MediaStream จริง
-- หลังหน้าโหลดจบ จะแสดงกล่องยืนยัน และเมื่อกดอนุญาต Browser จะขอสิทธิ์กล้อง
-- เมื่อเปิดสำเร็จ ภาพกล้องทำงานด้านหลังหน้า Login และ Hand Tracking เริ่มอัตโนมัติ
-- ออกแบบหน้า Login ใหม่ให้เป็นธีมอวกาศน่ารัก มี Scratch cat, animation, feature chips และสถานะกล้อง
-- เพิ่มปุ่มเปิด/ปิดกล้อง AR จากหน้า Login โดยตรง

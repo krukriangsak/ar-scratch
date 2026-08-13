@@ -1,7 +1,0 @@
-Scratch AR Adventure v5.32 — Login Boot Recovery
-
-- แก้หน้า “เข้าสู่ระบบผู้เล่น / กำลังเตรียมระบบเข้าสู่เกม...” ค้าง
-- เปลี่ยนการโหลด app-v3.js เป็น dynamic module import พร้อม version query เพื่อลดปัญหา GitHub Pages cache
-- เพิ่ม boot watchdog 5 วินาที ถ้าโมดูลหลักไม่เริ่มทำงานจะไม่ปล่อยหน้าค้าง
-- เพิ่มปุ่มโหลดระบบใหม่แบบ cache-busting เมื่อโมดูลโหลดล้มเหลว
-- ไม่ลบหน้าโหลดและแอนิเมชันเดิม

@@ -1,7 +1,0 @@
-Scratch AR Adventure v5.36 — Admin White Screen Fix
-
-- แก้ SyntaxError ในระบบ Unlimited Lesson Media ของหน้า Admin
-- แก้ expression ที่ผสม ?? และ || ใน pullMedia()
-- แยกไฟล์ admin module เป็น js/admin-v36.js เพื่อหลีกเลี่ยง browser cache เก่า
-- เพิ่มหน้า Loading/Fallback ใน admin.html แทนจอขาว หาก module โหลดไม่สำเร็จ
-- ระบบเพิ่มรูป/วิดีโอ/เสียง/ลิงก์หลายรายการยังอยู่ครบ

@@ -1,9 +1,0 @@
-Scratch AR Adventure v5.33 - Local Server Boot Fix
-
-- แก้ Error: Failed to fetch dynamically imported module เมื่อดับเบิลคลิก index.html แบบ file://
-- ระบบตรวจพบ file:// ก่อนโหลด ES Module จึงไม่ปล่อยให้หน้า Login ค้าง
-- เพิ่มหน้าแนะนำการเปิดผ่าน Local Server ที่ชัดเจน
-- เพิ่ม OPEN-GAME.bat สำหรับ Windows: เปิด Python HTTP Server ที่พอร์ต 5500 แล้วเปิดเบราว์เซอร์อัตโนมัติ
-- ปรับ start-server.bat ให้เรียก OPEN-GAME.bat
-- เปลี่ยน cache-busting ของ app-v3.js เป็น v5.33
-- GitHub Pages / Live Server / localhost ยังใช้งานระบบ Login, Firebase, Camera และ Hand Tracking ตามปกติ

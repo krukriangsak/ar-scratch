@@ -1,9 +1,0 @@
-Scratch AR Adventure v5.20 - Login Boot Fix
-
-แก้ไขปัญหาหน้าเกมหลักไม่แสดงหน้าต้อนรับ/ล็อกอิน
-- กู้คืนฟังก์ชัน init(), leaderboard(), profile(), clock, maintenance, voice settings และ camera shutdown ที่หายจาก v5.19
-- แสดง UI หน้าเริ่มเกมทันที โดยไม่รอ Firebase โหลดเสร็จ
-- Firebase error หรืออินเทอร์เน็ตช้าจะไม่ทำให้หน้าเกมว่าง
-- เมื่อเปิดเว็บใหม่จะไม่ auto-login บัญชีเก่า และเริ่มที่หน้า Welcome -> Login ตาม flow ของระบบ
-- สามารถใช้โหมดออฟไลน์ได้หาก Firebase เชื่อมต่อไม่สำเร็จ
-- คงฟังก์ชัน Editable Inputs และ Smart Preview จาก v5.19 ไว้ครบ
