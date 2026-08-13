@@ -1,0 +1,9 @@
+Scratch AR Adventure v5.24 — Select-to-Read
+
+- Added contextual Read selection button when the learner selects text.
+- Supports mouse drag, keyboard selection, and mobile text selection where the browser exposes Selection API.
+- Thai mode reads mixed Thai/English with the existing bilingual reader.
+- English mode reads the selected text with the English voice.
+- Added Stop button beside the contextual reader.
+- Added a Settings toggle to enable/disable the contextual selection reader.
+- The floating Reading Bot remains removed.

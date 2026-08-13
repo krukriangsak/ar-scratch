@@ -1,0 +1,16 @@
+Scratch AR Adventure v5.18 — Simplified Block System
+
+Removed to reduce system complexity:
+- Scratch Playground v5.17 — Creator Studio Blocks
+- Shared Block Library runtime
+- Creator Studio shared-block editor
+- Scratch Block Lab / shared block synchronization
+- Firestore blockStudio loading on the player page
+
+Kept:
+- Normal player lessons and levels
+- Scratch Level Studio in Admin using the built-in block list from data/seed.js
+- Game Creator Studio
+- Player accounts, Firebase online data, leaderboard, audio, camera/hand controls, announcements, maintenance mode, contacts, UI/theme settings
+
+Existing levels now use their normal `answer` block text as the source of truth. Old `answerBlocks` data can remain in Firestore/localStorage but is ignored by the player runtime.
